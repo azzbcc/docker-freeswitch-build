@@ -67,5 +67,10 @@ RUN \
     cd src/mod/applications/mod_commands && \
     make install
 
+# 安装 mod_dptools
+RUN \
+    cd src/mod/applications/mod_dptools && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
