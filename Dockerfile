@@ -62,5 +62,10 @@ RUN \
     # 头文件以及pc文件
     make install-library_includeHEADERS install-library_includetestHEADERS install-pkgconfigDATA
 
+# 安装 mod_commands
+RUN \
+    cd src/mod/applications/mod_commands && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
