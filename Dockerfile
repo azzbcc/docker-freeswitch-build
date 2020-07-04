@@ -117,5 +117,14 @@ RUN \
     cd src/mod/formats/mod_native_file && \
     make install
 
+# 安装 mod_sndfile
+RUN \
+    # 安装依赖
+    dnf install -y libsndfile-devel && \
+    # 重新生成Makefile
+    ./config.status --recheck && \
+    cd src/mod/formats/mod_sndfile && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
