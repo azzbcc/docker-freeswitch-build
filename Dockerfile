@@ -107,5 +107,10 @@ RUN \
     cd src/mod/event_handlers/mod_event_socket && \
     make install
 
+# 安装 mod_local_stream
+RUN \
+    cd src/mod/formats/mod_local_stream && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
