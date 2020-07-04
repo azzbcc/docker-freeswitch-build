@@ -11,9 +11,7 @@ ENV \
 RUN sed -i 's|^enabled=0|enabled=1|' /etc/yum.repos.d/CentOS-PowerTools.repo
 
 # 系统更新
-RUN \
-    dnf update -y && \
-    dnf clean all
+RUN dnf update -y
 
 # 添加freeswitch源码
 ADD https://github.com/signalwire/freeswitch/archive/v${FS_VERSION}.tar.gz /usr/src/freeswitch.tar.gz
@@ -30,8 +28,6 @@ WORKDIR /usr/src/freeswitch-${FS_VERSION}
 RUN \
     # 依赖软件
     dnf install -y which autoconf automake libtool make && \
-    # 清理缓存
-    dnf clean all && \
     # 引导
     ./bootstrap.sh -j
 
@@ -39,8 +35,6 @@ RUN \
 RUN \
     # 依赖软件
     dnf install -y gcc-c++ diffutils file zlib-devel libjpeg-devel sqlite-devel libcurl-devel pcre-devel libtiff-devel speex-devel speexdsp-devel libedit-devel openssl-devel && \
-    # 清理缓存
-    dnf clean all && \
     # 排除所有模块
     echo > modules.conf && \
     # 配置
@@ -50,8 +44,6 @@ RUN \
 RUN \
     # 依赖
     dnf install -y yasm && \
-    # 清理缓存
-    dnf clean all && \
     # 编译
     make
 
@@ -86,7 +78,6 @@ RUN \
 RUN \
     # 安装依赖
     dnf install -y opus-devel && \
-    dnf clean all && \
     # 重新生成Makefile
     ./config.status --recheck && \
     cd src/mod/codecs/mod_opus && \
