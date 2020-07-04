@@ -18,5 +18,10 @@ RUN \
 # 添加freeswitch源码
 ADD https://github.com/signalwire/freeswitch/archive/v${FS_VERSION}.tar.gz /usr/src/freeswitch.tar.gz
 
+# 解压并删除旧目录
+RUN \
+    tar xvf /usr/src/freeswitch.tar.gz -C /usr/src && \
+    rm /usr/src/freeswitch.tar.gz
+
 # 执行
 CMD ["/bin/bash"]
