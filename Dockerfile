@@ -55,5 +55,12 @@ RUN \
     # 编译
     make
 
+# 安装
+RUN \
+    # 执行文件以及核心库
+    make install-binPROGRAMS && \
+    # 头文件以及pc文件
+    make install-library_includeHEADERS install-library_includetestHEADERS install-pkgconfigDATA
+
 # 执行
 CMD ["/bin/bash"]
