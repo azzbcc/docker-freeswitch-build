@@ -112,5 +112,10 @@ RUN \
     cd src/mod/formats/mod_local_stream && \
     make install
 
+# 安装 mod_native_file
+RUN \
+    cd src/mod/formats/mod_native_file && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
