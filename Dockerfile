@@ -23,5 +23,8 @@ RUN \
     tar xvf /usr/src/freeswitch.tar.gz -C /usr/src && \
     rm /usr/src/freeswitch.tar.gz
 
+# 配置工作目录
+WORKDIR /usr/src/freeswitch-${FS_VERSION}
+
 # 执行
 CMD ["/bin/bash"]
