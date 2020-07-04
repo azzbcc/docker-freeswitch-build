@@ -92,5 +92,10 @@ RUN \
     cd src/mod/databases/mod_mariadb && \
     make install
 
+# 安装 mod_dialplan_xml
+RUN \
+    cd src/mod/dialplans/mod_dialplan_xml && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
