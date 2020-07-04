@@ -46,5 +46,14 @@ RUN \
     # 配置
     ./configure --prefix=
 
+# 编译
+RUN \
+    # 依赖
+    dnf install -y yasm && \
+    # 清理缓存
+    dnf clean all && \
+    # 编译
+    make
+
 # 执行
 CMD ["/bin/bash"]
