@@ -77,5 +77,10 @@ RUN \
     cd src/mod/applications/mod_sms && \
     make install
 
+# 安装 mod_curl
+RUN \
+    cd src/mod/applications/mod_curl && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
