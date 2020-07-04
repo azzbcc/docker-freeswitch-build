@@ -15,5 +15,8 @@ RUN \
     dnf update -y && \
     dnf clean all
 
+# 添加freeswitch源码
+ADD https://github.com/signalwire/freeswitch/archive/v${FS_VERSION}.tar.gz /usr/src/freeswitch.tar.gz
+
 # 执行
 CMD ["/bin/bash"]
