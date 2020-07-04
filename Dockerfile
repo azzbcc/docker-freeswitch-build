@@ -82,5 +82,15 @@ RUN \
     cd src/mod/applications/mod_curl && \
     make install
 
+# 安装 mod_opus
+RUN \
+    # 安装依赖
+    dnf install -y opus-devel && \
+    dnf clean all && \
+    # 重新生成Makefile
+    ./config.status --recheck && \
+    cd src/mod/codecs/mod_opus && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
