@@ -102,5 +102,10 @@ RUN \
     cd src/mod/endpoints/mod_sofia && \
     make install
 
+# 安装 mod_event_socket
+RUN \
+    cd src/mod/event_handlers/mod_event_socket && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
