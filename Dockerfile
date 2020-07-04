@@ -83,5 +83,14 @@ RUN \
     cd src/mod/codecs/mod_opus && \
     make install
 
+# 安装 mod_mariadb
+RUN \
+    # 安装依赖
+    dnf install -y mariadb-devel && \
+    # 重新生成Makefile
+    ./config.status --recheck && \
+    cd src/mod/databases/mod_mariadb && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
