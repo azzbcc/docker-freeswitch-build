@@ -26,5 +26,14 @@ RUN \
 # 配置工作目录
 WORKDIR /usr/src/freeswitch-${FS_VERSION}
 
+# 引导
+RUN \
+    # 依赖软件
+    dnf install -y which autoconf automake libtool make && \
+    # 清理缓存
+    dnf clean all && \
+    # 引导
+    ./bootstrap.sh -j
+
 # 执行
 CMD ["/bin/bash"]
