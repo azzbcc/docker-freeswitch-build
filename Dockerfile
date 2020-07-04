@@ -35,5 +35,16 @@ RUN \
     # 引导
     ./bootstrap.sh -j
 
+# 配置
+RUN \
+    # 依赖软件
+    dnf install -y gcc-c++ diffutils file zlib-devel libjpeg-devel sqlite-devel libcurl-devel pcre-devel libtiff-devel speex-devel speexdsp-devel libedit-devel openssl-devel && \
+    # 清理缓存
+    dnf clean all && \
+    # 排除所有模块
+    echo > modules.conf && \
+    # 配置
+    ./configure --prefix=
+
 # 执行
 CMD ["/bin/bash"]
