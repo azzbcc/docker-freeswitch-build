@@ -97,5 +97,10 @@ RUN \
     cd src/mod/dialplans/mod_dialplan_xml && \
     make install
 
+# 安装 mod_sofia
+RUN \
+    cd src/mod/endpoints/mod_sofia && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
