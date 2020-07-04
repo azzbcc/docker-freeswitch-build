@@ -72,5 +72,10 @@ RUN \
     cd src/mod/applications/mod_dptools && \
     make install
 
+# 安装 mod_sms
+RUN \
+    cd src/mod/applications/mod_sms && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
