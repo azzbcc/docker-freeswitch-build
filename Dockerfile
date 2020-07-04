@@ -38,7 +38,7 @@ RUN \
     # 排除所有模块
     echo > modules.conf && \
     # 配置
-    ./configure --prefix=
+    ./configure --prefix=/usr
 
 # 编译
 RUN \
