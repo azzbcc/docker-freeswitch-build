@@ -140,5 +140,10 @@ RUN \
     cd src/mod/languages/mod_lua && \
     make install
 
+# 安装 mod_logfile
+RUN \
+    cd src/mod/loggers/mod_logfile && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
