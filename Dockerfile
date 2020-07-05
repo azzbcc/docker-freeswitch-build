@@ -126,5 +126,10 @@ RUN \
     cd src/mod/formats/mod_sndfile && \
     make install
 
+# 安装 mod_tone_stream
+RUN \
+    cd src/mod/formats/mod_tone_stream && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
