@@ -131,5 +131,14 @@ RUN \
     cd src/mod/formats/mod_tone_stream && \
     make install
 
+# 安装 mod_lua
+RUN \
+    # 安装依赖
+    dnf install -y lua-devel && \
+    # 重新生成Makefile
+    ./config.status --recheck && \
+    cd src/mod/languages/mod_lua && \
+    make install
+
 # 执行
 CMD ["/bin/bash"]
