@@ -16,13 +16,14 @@ RUN dnf update -y
 # 添加freeswitch源码
 ADD https://github.com/signalwire/freeswitch/archive/v${FS_VERSION}.tar.gz /usr/src/freeswitch.tar.gz
 
-# 解压并删除旧目录
+# 解压并删除源文件
 RUN \
-    tar xvf /usr/src/freeswitch.tar.gz -C /usr/src && \
+    mkdir -p /usr/src/freeswitch && \
+    tar -xf /usr/src/freeswitch.tar.gz -C /usr/src/freeswitch --strip-components=1 && \
     rm /usr/src/freeswitch.tar.gz
 
 # 配置工作目录
-WORKDIR /usr/src/freeswitch-${FS_VERSION}
+WORKDIR /usr/src/freeswitch
 
 # 引导
 RUN \
