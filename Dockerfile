@@ -5,37 +5,60 @@ ENV \
     LANGUAGE="en_US.UTF-8" \
     LANG="en_US.UTF-8" \
     LC_ALL=C \
-    FS_VERSION=1.10.3
+    SOFIA_SIP_VERSION=f6f29b4 \
+    SPANDSP_VERSION=19f867a \
+    FS_VERSION=v1.10.5
 
 # 启用PowerTools源
 RUN sed -i 's|^enabled=0|enabled=1|' /etc/yum.repos.d/CentOS-PowerTools.repo
 
-# 系统更新
-RUN dnf update -y
+# 系统更新以及依赖安装
+RUN \
+    dnf update -y && \
+    dnf install -y which autoconf automake libtool make gcc-c++ diffutils file && \
+    dnf install -y zlib-devel libjpeg-devel sqlite-devel libcurl-devel pcre-devel libtiff-devel speex-devel speexdsp-devel libedit-devel openssl-devel
 
-# 添加freeswitch源码
-ADD https://github.com/signalwire/freeswitch/archive/v${FS_VERSION}.tar.gz /usr/src/freeswitch.tar.gz
+# 添加freeswitch相关源码
+ADD https://github.com/freeswitch/sofia-sip/archive/${SOFIA_SIP_VERSION}.tar.gz /usr/src/sofia-sip.tar.gz
+ADD https://github.com/freeswitch/spandsp/archive/${SPANDSP_VERSION}.tar.gz /usr/src/spandsp.tar.gz
+ADD https://github.com/signalwire/freeswitch/archive/${FS_VERSION}.tar.gz /usr/src/freeswitch.tar.gz
 
 # 解压并删除源文件
 RUN \
-    mkdir -p /usr/src/freeswitch && \
+    mkdir -p /usr/src/{freeswitch,sofia-sip,spandsp} && \
     tar -xf /usr/src/freeswitch.tar.gz -C /usr/src/freeswitch --strip-components=1 && \
-    rm /usr/src/freeswitch.tar.gz
+    tar -xf /usr/src/sofia-sip.tar.gz -C /usr/src/sofia-sip --strip-components=1 && \
+    tar -xf /usr/src/spandsp.tar.gz -C /usr/src/spandsp --strip-components=1 && \
+    rm /usr/src/{freeswitch,sofia-sip,spandsp}.tar.gz
+
+# 依赖sofia-sip
+RUN \
+    cd /usr/src/sofia-sip && \
+    # 引导
+    ./bootstrap.sh -j && \
+    # 配置
+    ./configure --prefix=/usr && \
+    # 安装
+    make install
+
+# 依赖spandsp
+RUN \
+    cd /usr/src/spandsp && \
+    # 引导
+    ./bootstrap.sh -j && \
+    # 配置
+    ./configure --prefix=/usr && \
+    # 安装
+    make install
+
 
 # 配置工作目录
 WORKDIR /usr/src/freeswitch
 
-# 引导
-RUN \
-    # 依赖软件
-    dnf install -y which autoconf automake libtool make && \
-    # 引导
-    ./bootstrap.sh -j
-
 # 配置
 RUN \
-    # 依赖软件
-    dnf install -y gcc-c++ diffutils file zlib-devel libjpeg-devel sqlite-devel libcurl-devel pcre-devel libtiff-devel speex-devel speexdsp-devel libedit-devel openssl-devel && \
+    # 引导
+    ./bootstrap.sh -j && \
     # 排除所有模块
     echo > modules.conf && \
     # 配置
