@@ -37,7 +37,7 @@ RUN \
     # 引导
     ./bootstrap.sh -j && \
     # 配置
-    ./configure --prefix=/usr && \
+    ./configure --prefix=/usr --enable-static=no && \
     # 安装
     make install
 
@@ -47,7 +47,7 @@ RUN \
     # 引导
     ./bootstrap.sh -j && \
     # 配置
-    ./configure --prefix=/usr && \
+    ./configure --prefix=/usr --enable-static=no && \
     # 安装
     make install
 
@@ -62,7 +62,7 @@ RUN \
     # 排除所有模块
     echo > modules.conf && \
     # 配置
-    ./configure --prefix=/usr
+    ./configure --prefix=/usr --enable-static=no
 
 # 编译
 RUN \
