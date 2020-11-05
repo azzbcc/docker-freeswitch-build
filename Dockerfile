@@ -5,8 +5,8 @@ ENV \
     LANGUAGE="en_US.UTF-8" \
     LANG="en_US.UTF-8" \
     LC_ALL=C \
-    SOFIA_SIP_VERSION=f6f29b4 \
-    SPANDSP_VERSION=19f867a \
+    SOFIA_SIP_VERSION=v1.13.2 \
+    SPANDSP_VERSION=e08c74d \
     FS_VERSION=v1.10.5
 
 # 启用PowerTools源
