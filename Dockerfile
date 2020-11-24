@@ -73,6 +73,8 @@ RUN \
 
 # 安装
 RUN \
+    # 下载音乐文件
+    make cd-sounds cd-moh && \
     # 执行文件以及核心库
     make install-binPROGRAMS && \
     # 头文件以及pc文件
