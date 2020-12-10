@@ -10,7 +10,9 @@ ENV \
     FS_VERSION=v1.10.5
 
 # 启用PowerTools源
-RUN sed -i 's|^enabled=0|enabled=1|' /etc/yum.repos.d/CentOS-PowerTools.repo
+RUN \
+    dnf install 'dnf-command(config-manager)' -y && \
+    dnf config-manager --enable powertools
 
 # 系统更新以及依赖安装
 RUN \
