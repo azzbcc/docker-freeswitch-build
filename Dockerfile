@@ -5,7 +5,7 @@ ENV \
     LANGUAGE="en_US.UTF-8" \
     LANG="en_US.UTF-8" \
     LC_ALL=C \
-    SOFIA_SIP_VERSION=v1.13.2 \
+    SOFIA_SIP_VERSION=v1.13.3 \
     SPANDSP_VERSION=e08c74d \
     FS_VERSION=v1.10.5
 
