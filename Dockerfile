@@ -7,7 +7,7 @@ ENV \
     LC_ALL=C \
     SOFIA_SIP_VERSION=v1.13.6 \
     SPANDSP_VERSION=e08c74d \
-    FS_VERSION=v1.10.6
+    FS_VERSION=v1.10.7
 
 # 启用PowerTools源
 RUN \
