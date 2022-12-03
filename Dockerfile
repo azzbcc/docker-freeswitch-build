@@ -7,7 +7,7 @@ ENV \
     LC_ALL=C \
     SOFIA_SIP_VERSION=v1.13.7 \
     SPANDSP_VERSION=e59ca8f \
-    FS_VERSION=v1.10.7
+    FS_VERSION=v1.10.8
 
 # 启用PowerTools源
 RUN \
@@ -18,7 +18,7 @@ RUN \
 RUN \
     dnf update -y && \
     dnf install -y which autoconf automake libtool make gcc-c++ diffutils file && \
-    dnf install -y zlib-devel libjpeg-devel sqlite-devel libcurl-devel pcre-devel libtiff-devel speex-devel speexdsp-devel libedit-devel openssl-devel
+    dnf install -y zlib-devel libjpeg-devel sqlite-devel libcurl-devel pcre-devel libtiff-devel speex-devel speexdsp-devel libedit-devel openssl-devel libuuid-devel
 
 # 添加freeswitch相关源码
 ADD https://github.com/freeswitch/sofia-sip/archive/${SOFIA_SIP_VERSION}.tar.gz /usr/src/sofia-sip.tar.gz
