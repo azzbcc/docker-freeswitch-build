@@ -69,19 +69,57 @@ RUN \
 # 配置工作目录
 WORKDIR /usr/src/freeswitch
 
-# 配置
+# 安装必要模块以及模块依赖库
 RUN \
-    # 引导
-    ./bootstrap.sh -j && \
     # 排除所有模块
     echo > modules.conf && \
-    # 配置
-    ./configure --prefix=/usr --enable-static=no
+    # 安装 mod_commands
+    echo applications/mod_commands >> modules.conf && \
+    # 安装 mod_dptools
+    echo applications/mod_dptools >> modules.conf && \
+    # 安装 mod_sms
+    echo applications/mod_sms >> modules.conf && \
+    # 安装 mod_curl
+    echo applications/mod_curl >> modules.conf && \
+    # 安装 mod_opus
+    # 安装依赖
+    dnf install -y opus-devel && \
+    echo codecs/mod_opus >> modules.conf && \
+    # 安装 mod_mariadb
+    # 安装依赖
+    dnf install -y mariadb-devel && \
+    echo databases/mod_mariadb >> modules.conf && \
+    # 安装 mod_dialplan_xml
+    echo dialplans/mod_dialplan_xml >> modules.conf && \
+    # 安装 mod_sofia
+    echo endpoints/mod_sofia >> modules.conf && \
+    # 安装 mod_event_socket
+    echo event_handlers/mod_event_socket >> modules.conf && \
+    # 安装 mod_local_stream
+    echo formats/mod_local_stream >> modules.conf && \
+    # 安装 mod_native_file
+    echo formats/mod_native_file >> modules.conf && \
+    # 安装 mod_sndfile
+    # 安装依赖
+    dnf install -y libsndfile-devel && \
+    echo formats/mod_sndfile >> modules.conf && \
+    # 安装 mod_tone_stream
+    echo formats/mod_tone_stream >> modules.conf && \
+    # 安装 mod_lua
+    # 安装依赖
+    dnf install -y lua-devel && \
+    echo languages/mod_lua >> modules.conf && \
+    # 安装 mod_logfile
+    echo loggers/mod_logfile >> modules.conf
 
 # 编译
 RUN \
     # 依赖
     dnf install -y yasm && \
+    # 引导
+    ./bootstrap.sh -j && \
+    # 配置
+    ./configure --prefix=/usr --enable-static=no && \
     # 编译
     make
 
@@ -89,99 +127,10 @@ RUN \
 RUN \
     # 执行文件以及核心库
     make install-binPROGRAMS && \
+    # 安装常用模块
+    make install_mod && \
     # 头文件以及pc文件
     make install-library_includeHEADERS install-library_includetestHEADERS install-pkgconfigDATA
-
-# 安装 mod_commands
-RUN \
-    cd src/mod/applications/mod_commands && \
-    make install
-
-# 安装 mod_dptools
-RUN \
-    cd src/mod/applications/mod_dptools && \
-    make install
-
-# 安装 mod_sms
-RUN \
-    cd src/mod/applications/mod_sms && \
-    make install
-
-# 安装 mod_curl
-RUN \
-    cd src/mod/applications/mod_curl && \
-    make install
-
-# 安装 mod_opus
-RUN \
-    # 安装依赖
-    dnf install -y opus-devel && \
-    # 重新生成Makefile
-    ./config.status --recheck && \
-    cd src/mod/codecs/mod_opus && \
-    make install
-
-# 安装 mod_mariadb
-RUN \
-    # 安装依赖
-    dnf install -y mariadb-devel && \
-    # 重新生成Makefile
-    ./config.status --recheck && \
-    cd src/mod/databases/mod_mariadb && \
-    make install
-
-# 安装 mod_dialplan_xml
-RUN \
-    cd src/mod/dialplans/mod_dialplan_xml && \
-    make install
-
-# 安装 mod_sofia
-RUN \
-    cd src/mod/endpoints/mod_sofia && \
-    make install
-
-# 安装 mod_event_socket
-RUN \
-    cd src/mod/event_handlers/mod_event_socket && \
-    make install
-
-# 安装 mod_local_stream
-RUN \
-    cd src/mod/formats/mod_local_stream && \
-    make install
-
-# 安装 mod_native_file
-RUN \
-    cd src/mod/formats/mod_native_file && \
-    make install
-
-# 安装 mod_sndfile
-RUN \
-    # 安装依赖
-    dnf install -y libsndfile-devel && \
-    # 重新生成Makefile
-    ./config.status --recheck && \
-    cd src/mod/formats/mod_sndfile && \
-    make install
-
-# 安装 mod_tone_stream
-RUN \
-    cd src/mod/formats/mod_tone_stream && \
-    make install
-
-# 安装 mod_lua
-RUN \
-    # 安装依赖
-    dnf install -y lua-devel && \
-    # 重新生成Makefile
-    ./config.status --recheck && \
-    cd src/mod/languages/mod_lua && \
-    make install
-
-# 安装 mod_logfile
-RUN \
-    cd src/mod/loggers/mod_logfile && \
-    make install
 
 # 执行
 CMD ["/bin/bash"]
