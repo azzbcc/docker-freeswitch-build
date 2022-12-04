@@ -7,7 +7,9 @@ ENV \
     LC_ALL=C \
     SOFIA_SIP_VERSION=v1.13.9 \
     SPANDSP_VERSION=e59ca8f \
-    FS_VERSION=v1.10.8
+    FS_VERSION=v1.10.8 \
+    FS_MOH_VERSION=1.0.52 \
+    FS_SOUNDS_VERSION=1.0.53
 
 # 启用PowerTools源
 RUN \
@@ -24,6 +26,16 @@ RUN \
 ADD https://github.com/freeswitch/sofia-sip/archive/${SOFIA_SIP_VERSION}.tar.gz /usr/src/sofia-sip.tar.gz
 ADD https://github.com/freeswitch/spandsp/archive/${SPANDSP_VERSION}.tar.gz /usr/src/spandsp.tar.gz
 ADD https://github.com/signalwire/freeswitch/archive/${FS_VERSION}.tar.gz /usr/src/freeswitch.tar.gz
+
+# 下载freeswitche音乐文件
+ADD https://files.freeswitch.org/freeswitch-sounds-music-8000-${FS_MOH_VERSION}.tar.gz /usr/src/freeswitch/
+ADD https://files.freeswitch.org/freeswitch-sounds-music-16000-${FS_MOH_VERSION}.tar.gz /usr/src/freeswitch/
+ADD https://files.freeswitch.org/freeswitch-sounds-music-32000-${FS_MOH_VERSION}.tar.gz /usr/src/freeswitch/
+ADD https://files.freeswitch.org/freeswitch-sounds-music-48000-${FS_MOH_VERSION}.tar.gz /usr/src/freeswitch/
+ADD https://files.freeswitch.org/freeswitch-sounds-en-us-callie-8000-${FS_SOUNDS_VERSION}.tar.gz /usr/src/freeswitch/
+ADD https://files.freeswitch.org/freeswitch-sounds-en-us-callie-16000-${FS_SOUNDS_VERSION}.tar.gz /usr/src/freeswitch/
+ADD https://files.freeswitch.org/freeswitch-sounds-en-us-callie-32000-${FS_SOUNDS_VERSION}.tar.gz /usr/src/freeswitch/
+ADD https://files.freeswitch.org/freeswitch-sounds-en-us-callie-48000-${FS_SOUNDS_VERSION}.tar.gz /usr/src/freeswitch/
 
 # 解压并删除源文件
 RUN \
@@ -75,8 +87,6 @@ RUN \
 
 # 安装
 RUN \
-    # 下载音乐文件
-    make cd-sounds cd-moh && \
     # 执行文件以及核心库
     make install-binPROGRAMS && \
     # 头文件以及pc文件
