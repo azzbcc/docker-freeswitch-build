@@ -1,4 +1,4 @@
-FROM rockylinux:8
+FROM rockylinux:9
 LABEL maintainer="Clarence <xjh.azzbcc@gmail.com>"
 
 ENV \
@@ -14,7 +14,7 @@ ENV \
 # 启用PowerTools源
 RUN \
     dnf install 'dnf-command(config-manager)' -y && \
-    dnf config-manager --enable powertools
+    dnf config-manager --enable crb
 
 # 系统更新以及依赖安装
 RUN \
