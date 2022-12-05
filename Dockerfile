@@ -114,6 +114,7 @@ RUN \
 
 # 编译
 RUN \
+    dnf install -y epel-release && \
     # 依赖
     dnf install -y yasm && \
     # 引导
